@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Phobia Bot">
+<meta name="theme-color" content="#07110d">
+<title>🎄 Phobia Bot · Christmas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07110d;--panel:#0f1f17;--panel2:#14281d;--line:#24432f;--line2:#335c41;
+  --text:#fff6ee;--mut:#a9c4b0;
+  --gold:#f5c451;--ok:#5fe08a;--bad:#ff6b6b;--accent:#c8102e;--violet:#ff9b9b;
+  --r-lg:30px;--r-md:20px;--r-sm:13px;
+  --glass:rgba(15,31,23,.66);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:76px;color-scheme:dark}
+body{
+  margin:0;min-height:100vh;color:var(--text);background:var(--ink);
+  font:15px/1.5 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before,body::after{content:"";position:fixed;pointer-events:none;z-index:0}
+body::before{
+  inset:-10%;
+  background:
+    radial-gradient(60% 38% at 12% 0%,rgba(200,16,46,.34),transparent 70%),
+    radial-gradient(46% 32% at 100% 18%,rgba(95,224,138,.11),transparent 70%),
+    radial-gradient(60% 40% at 50% 112%,rgba(245,196,81,.11),transparent 70%);
+  animation:drift 28s ease-in-out infinite alternate;
+}
+body::after{
+  inset:0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 20px 30px,rgba(255,255,255,.7) 50%,transparent 51%),
+    radial-gradient(1px 1px at 120px 80px,rgba(255,255,255,.5) 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 210px 150px,rgba(245,196,81,.75) 50%,transparent 51%),
+    radial-gradient(1px 1px at 70px 190px,rgba(255,255,255,.45) 50%,transparent 51%),
+    radial-gradient(1px 1px at 260px 40px,rgba(255,155,155,.65) 50%,transparent 51%);
+  background-size:300px 240px;
+  animation:twinkle 7s ease-in-out infinite alternate;
+}
+@keyframes drift{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.08)}}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{from{box-shadow:0 0 36px rgba(245,196,81,.4),0 0 90px rgba(245,196,81,.12)}to{box-shadow:0 0 56px rgba(245,196,81,.62),0 0 120px rgba(245,196,81,.2)}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(95,224,138,.55)}100%{box-shadow:0 0 0 9px rgba(95,224,138,0)}}
+
+.wrap{position:relative;z-index:1;max-width:740px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 16px calc(60px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:8px 2px 16px}
+.brand{
+  font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;
+  background:linear-gradient(95deg,#fff 10%,var(--gold) 58%,var(--violet));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.brand::before{content:"✦ ";-webkit-text-fill-color:var(--gold);font-size:.62em;vertical-align:.28em}
+.brand small{display:block;font-size:13px;font-weight:400;letter-spacing:0;margin-top:8px;-webkit-text-fill-color:var(--mut)}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:8px 14px;border:1px solid var(--line);border-radius:99px;background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:13px;font-weight:600;white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--bad)}
+.pill.on{border-color:rgba(95,224,138,.35)}
+.pill.on i{background:var(--ok);animation:ping 2s ease-out infinite}
+
+nav{position:sticky;top:0;z-index:5;margin:0 -16px 18px;padding:max(10px,env(safe-area-inset-top)) 16px 10px;background:rgba(7,17,13,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{width:auto;margin:0;flex:none;padding:9px 16px;border-radius:99px;border:1px solid transparent;background:transparent;color:var(--mut);font-weight:600;font-size:14px}
+nav button:hover{color:var(--text)}
+nav button[aria-selected="true"]{color:var(--text);border-color:rgba(245,196,81,.35);background:linear-gradient(135deg,rgba(200,16,46,.42),rgba(245,196,81,.14))}
+
+.hero{
+  display:grid;grid-template-columns:auto 1fr;gap:20px 26px;align-items:center;padding:24px;
+  border:1px solid transparent;border-radius:var(--r-lg);
+  background:
+    linear-gradient(180deg,rgba(15,31,23,.92),rgba(15,31,23,.92)) padding-box,
+    linear-gradient(135deg,rgba(245,196,81,.55),rgba(200,16,46,.5) 50%,rgba(95,224,138,.35)) border-box;
+  box-shadow:0 24px 60px -24px rgba(200,16,46,.5);
+}
+.moon{position:relative;width:88px;height:88px;border-radius:50%;flex:none;transition:all .5s}
+.moon::after{content:"";position:absolute;inset:-13px;border-radius:50%;border:1px dashed rgba(190,215,200,.35);animation:spin 40s linear infinite}
+.moon.full{
+  background:
+    radial-gradient(circle at 62% 64%,rgba(200,150,40,.32) 0 9%,transparent 10%),
+    radial-gradient(circle at 30% 70%,rgba(200,150,40,.26) 0 6%,transparent 7%),
+    radial-gradient(circle at 70% 28%,rgba(200,150,40,.2) 0 5%,transparent 6%),
+    radial-gradient(circle at 35% 30%,#fff3c4,var(--gold) 55%,#d9a21a);
+  animation:glow 4.5s ease-in-out infinite alternate;
+}
+.moon.full::after{border-color:rgba(245,196,81,.45)}
+.moon.crescent{background:transparent;box-shadow:inset -23px 9px 0 0 var(--gold),0 0 34px rgba(245,196,81,.28)}
+.moon.new{background:transparent;border:2px solid var(--mut)}
+.moon.off{background:transparent;border:2px dashed var(--bad);box-shadow:0 0 26px rgba(255,107,107,.22)}
+.moon.off::after{border-color:rgba(255,107,107,.3);animation-duration:90s}
+.hero h1{margin:0;font-size:26px;font-weight:800;line-height:1.12;letter-spacing:-.02em}
+.hero p{margin:7px 0 0;color:var(--mut)}
+.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat{padding:13px 15px;border:1px solid var(--line);border-radius:var(--r-sm);background:rgba(7,17,13,.5)}
+.stat .m{display:block;margin-bottom:2px}
+.v{font-size:17px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.actions button{margin-top:0}
+
+.c{position:relative;border:1px solid var(--line);border-radius:var(--r-md);background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:20px;margin:14px 0;box-shadow:0 14px 34px -22px rgba(0,0,0,.8)}
+.c::before{content:"";position:absolute;left:20px;right:20px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(245,196,81,.45),transparent)}
+.c h2{margin:0;font-size:18px;font-weight:800;letter-spacing:-.015em;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.c>.m:first-of-type,.c h2+.m{margin-top:5px}
+.m{color:var(--mut);font-size:13px}
+.m b{color:var(--text);font-weight:600}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--gold)}
+
+button,select,input,textarea{width:100%;padding:12px 14px;border-radius:var(--r-sm);border:1px solid var(--line);background:rgba(7,17,13,.7);color:var(--text);font:inherit;margin-top:10px;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(255,155,155,.18);outline:0}
+textarea{resize:vertical;line-height:1.45}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+button{font-weight:700;cursor:pointer;transition:transform .12s,filter .12s,box-shadow .2s}
+button:hover{filter:brightness(1.1)}button:active{transform:scale(.97)}
+.go{background:linear-gradient(135deg,#a8ff7a,#5fd12f);border-color:transparent;color:#0f2406;box-shadow:0 8px 22px -10px rgba(95,224,138,.7)}
+.stop{background:linear-gradient(135deg,#ff93a8,#f0627f);border-color:transparent;color:#3a0f1b;box-shadow:0 8px 22px -10px rgba(255,107,107,.7)}
+.acc{background:linear-gradient(135deg,#e0324b,#a30d28);border-color:transparent;color:#fff;box-shadow:0 8px 22px -10px rgba(200,16,46,.9)}
+.ghost{background:rgba(255,255,255,.03);border-color:var(--line2)}
+label{display:block;margin-top:14px;font-size:13px;color:var(--mut)}
+label input,label select,label textarea{margin-top:6px;color:var(--text)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input[type=checkbox]{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:22px;height:22px;padding:0;margin:0;border-radius:7px;border:1.5px solid var(--line2);background:rgba(7,17,13,.7)}
+input[type=checkbox]:checked{background:var(--ok);border-color:transparent}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:7px;top:3px;width:5px;height:10px;border:solid #0f2406;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.sw{width:60px;height:34px;margin:0;padding:0;border-radius:99px;position:relative;background:rgba(7,17,13,.8);flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:var(--mut);box-shadow:0 2px 6px rgba(0,0,0,.45);transition:all .22s}
+.sw[aria-checked="true"]{background:linear-gradient(135deg,#a8ff7a,#5fd12f);border-color:transparent;box-shadow:0 0 20px rgba(95,224,138,.35)}
+.sw[aria-checked="true"]::after{left:29px;background:#0f2406}
+
+.gclist{margin-top:12px;display:grid;gap:8px}
+.gcrow{display:flex;gap:12px;align-items:center;margin:0;padding:13px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:rgba(7,17,13,.55);color:var(--text);font-size:14px}
+.gcrow:has(input:checked){border-color:rgba(95,224,138,.4);background:rgba(95,224,138,.07)}
+.gcrow span{overflow:hidden;text-overflow:ellipsis}
+
+.gfrow{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:rgba(7,17,13,.55)}
+.gfrow.picked{border-color:rgba(245,196,81,.55)}
+.gfrow .nm{flex:1;min-width:0;cursor:pointer}
+.gfrow .nm b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gfrow button{width:84px;margin:0;padding:10px 12px}
+details.more{margin-top:14px}
+details.more summary{cursor:pointer;color:var(--gold);font-weight:700;font-size:14px}
+
+.banner{display:none;border:1px solid var(--bad);background:rgba(255,107,107,.1);color:#ffc6d1;border-radius:var(--r-md);padding:14px 16px;margin:0 0 14px}
+.banner.soft{border-color:var(--gold);background:rgba(245,196,81,.09);color:#ffd1a0}
+
+#log{margin-top:8px}
+.ev{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:13px}
+.ev:first-child{border-top:0}
+.ev time{color:var(--mut);font-variant-numeric:tabular-nums}
+.ev b{font-weight:700}
+.ev.error b{color:var(--bad)}.ev.cmd b{color:var(--ok)}.ev.system b{color:var(--gold)}
+.errbox{margin-top:8px;color:var(--bad);font-size:13px}
+
+.cmds{display:grid;gap:18px}
+.cmds h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--gold)}
+.cmds code{display:block;padding:8px 11px;margin-top:5px;border-radius:10px;background:rgba(7,17,13,.55);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;color:var(--text);overflow-wrap:anywhere}
+.cmds code span{color:var(--mut)}
+
+#toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:rgba(15,31,23,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line2);padding:12px 20px;border-radius:99px;font-weight:600;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);transition:all .25s;z-index:9;max-width:90vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast.err{border-color:var(--bad);color:#ffc6d1}
+
+[hidden]{display:none!important}
+@media(min-width:720px){.v{font-size:20px}.stats{grid-template-columns:repeat(4,1fr)}.actions{grid-template-columns:repeat(4,1fr)}.hero{padding:30px}.moon{width:108px;height:108px}.moon.crescent{box-shadow:inset -29px 11px 0 0 var(--gold),0 0 34px rgba(245,196,81,.28)}.hero h1{font-size:30px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+.hw{position:fixed;z-index:0;pointer-events:none;font-size:34px;opacity:.22;animation:floaty 9s ease-in-out infinite alternate}
+.hw:nth-of-type(2){animation-duration:12s;animation-delay:-3s}
+.hw:nth-of-type(3){animation-duration:15s;animation-delay:-6s}
+@keyframes floaty{from{transform:translateY(0) rotate(-6deg)}to{transform:translateY(-26px) rotate(6deg)}}
+
+pre.out{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:var(--r-sm);background:rgba(7,17,13,.55);font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;max-height:280px;overflow:auto;color:var(--text)}
+/* ---- Christmas ---- */
+.lights{position:relative;display:flex;justify-content:space-between;align-items:flex-start;height:30px;margin:-6px -4px 4px;overflow:hidden;pointer-events:none}
+.lights::before{content:"";position:absolute;left:-10px;right:-10px;top:-14px;height:26px;border-bottom:2px solid #1c3a28;border-radius:0 0 50% 50%/0 0 100% 100%}
+.lights b{position:relative;display:block;width:9px;height:14px;margin-top:8px;border-radius:50% 50% 55% 55%;background:var(--c);box-shadow:0 0 10px 2px var(--c);animation:bulb 2.4s ease-in-out infinite alternate;animation-delay:var(--d)}
+.lights b::before{content:"";position:absolute;left:2px;top:-4px;width:5px;height:5px;background:#1c3a28;border-radius:1px}
+@keyframes bulb{from{opacity:.35;filter:saturate(.7)}to{opacity:1;filter:saturate(1.3)}}
+.snow{position:fixed;top:-12px;z-index:0;pointer-events:none;border-radius:50%;background:#fff;opacity:.75;filter:blur(.4px);animation:fall linear infinite}
+@keyframes fall{0%{transform:translate3d(0,-5vh,0)}50%{transform:translate3d(var(--sw),55vh,0)}100%{transform:translate3d(calc(var(--sw)*-.6),108vh,0)}}
+.brand::before{content:"❄ "}
+.count-big{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;background:linear-gradient(95deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+</style>
+</head>
+<body>
+<span class="hw" style="top:14%;left:6%">🎁</span><span class="hw" style="top:46%;right:5%">🎄</span><span class="hw" style="top:76%;left:10%">⛄</span>
+<div class="wrap">
+<div class="lights" id="lights" aria-hidden="true"></div>
+<header>
+  <div class="brand">🎄 Phobia Bot <small><span id="ownt">Personal bot ng owner</span> · <span id="lib">–</span></small></div>
+  <div class="pill" id="conn"><i></i><span id="connt">Offline</span></div>
+</header>
+
+<nav role="tablist" aria-label="Mga seksyon">
+  <button role="tab" data-tab="home" aria-selected="true">Home</button>
+  <button role="tab" data-tab="chats" aria-selected="false">Mga GC</button>
+  <button role="tab" data-tab="locks" aria-selected="false">🔒 Locks</button>
+  <button role="tab" data-tab="spam" aria-selected="false">📣 Spam</button>
+  <button role="tab" data-tab="count" aria-selected="false">🔢 Count</button>
+  <button role="tab" data-tab="react" aria-selected="false">❤️ React</button>
+  <button role="tab" data-tab="settings" aria-selected="false">Settings</button>
+  <button role="tab" data-tab="session" aria-selected="false">Session</button>
+  <button role="tab" data-tab="activity" aria-selected="false">Activity</button>
+  <button role="tab" data-tab="cmds" aria-selected="false">Commands</button>
+</nav>
+
+<div class="banner" id="dead"><b>Patay na ang session.</b> Nag-pause ang auto-retry para hindi ma-flag ang account. Mag-paste ng bagong cookie sa Session tab.</div>
+
+<div class="banner soft" id="off"><b>Offline ka o hindi maabot ang server.</b> <span id="offt"></span> Hindi gagana ang mga button hanggang bumalik ang koneksyon. Kusa itong mag-re-refresh.</div>
+
+<!-- HOME -->
+<section id="tab-home" role="tabpanel">
+  <div class="hero">
+    <div class="moon off" id="moon" aria-hidden="true"></div>
+    <div>
+      <h1 id="state">Kumokonekta…</h1>
+      <p id="statesub">Hinihintay ang status ng bot.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="m">Messenger</span><span class="v" id="on">–</span></div>
+      <div class="stat"><span class="m">Bot</span><span class="v" id="run">–</span></div>
+      <div class="stat"><span class="m">Server uptime</span><span class="v" id="su">–</span></div>
+      <div class="stat"><span class="m">Bot uptime</span><span class="v" id="bu">–</span></div>
+    </div>
+    <div class="actions">
+      <button class="go" onclick="post('start')">▶ Start</button>
+      <button class="stop" onclick="post('stop')">■ Stop</button>
+      <button class="ghost" onclick="post('reconnect')">Reconnect</button>
+      <button class="ghost" onclick="post('disconnect')">Disconnect</button>
+    </div>
+  </div>
+
+  <div class="c">
+    <div class="row">
+      <div>
+        <h2>Auto reply sa lahat ng chat</h2>
+        <div class="m" id="st">–</div>
+      </div>
+      <button class="sw" id="autosw" role="switch" aria-checked="false" aria-label="Auto reply" onclick="post('auto',{on:!S.autoReply})"></button>
+    </div>
+  </div>
+
+  <div class="c">
+    <h2>Spam runs <span id="spbadge"></span></h2>
+    <div class="m" id="spsummary">Walang tumatakbo.</div>
+  </div>
+
+  <div class="c"><h2>Kalusugan ng session</h2><div class="m" id="health" style="line-height:1.8"></div></div>
+
+  <div class="c" id="installcard" hidden>
+    <h2>I-install bilang app</h2>
+    <div class="m" id="installtxt">Gawing app sa phone o computer. Mabubuksan ito kahit offline at makikita ang huling status.</div>
+    <button class="acc" id="installbtn" onclick="installApp()" hidden>Install app</button>
+  </div>
+</section>
+
+<!-- CHATS -->
+<section id="tab-chats" role="tabpanel" hidden>
+  <div class="c">
+    <h2>Mga group chat</h2>
+    <div class="m">I-tick ang mga GC na gusto mong sagutin ng bot. <b>Sa naka-tick lang ito magcha-chat.</b> Puwede mo ring i-ON/OFF sa mismong GC gamit ang <b>!on</b> / <b>!off</b> (admin). Kapag nag-restart ang server, kusa itong magre-resume.</div>
+    <div id="gclist" class="gclist m">Pindutin ang Refresh list…</div>
+    <button class="ghost" onclick="threads()">Refresh list</button>
+  </div>
+
+  <div class="c">
+    <h2>GC name cycle <span id="gcon"></span></h2>
+    <div class="m">Iikot ang pangalan ng napiling GC hanggang i-Stop mo. Chat command: <b>!gcname start</b> / <b>stop</b>.</div>
+    <label>Mga pangalan (isa kada linya)<textarea id="gc_names" rows="5"></textarea></label>
+    <label>Interval (segundo, min 10)<input id="gc_int" type="number" min="10" max="3600"></label>
+    <div class="m" id="gcst" style="margin-top:10px"></div>
+    <div class="g"><button class="go" onclick="gcStart()">▶ Start cycle</button><button class="stop" onclick="post('gcstop')">■ Stop cycle</button></div>
+    <button class="ghost" onclick="gcSave()">Save names</button>
+  </div>
+
+  <div class="c">
+    <h2>Group features</h2>
+    <div class="m">Dito na lang ginagawa ang <b>Lock GC name</b> at <b>Set ALL nicknames</b>. I-type ang gusto mong ilagay, tapos pindutin ang <b>Start</b> sa GC.</div>
+    <label>Feature<select id="gft" onchange="gfUI()"><option value="lock">Lock GC name</option><option value="nick">Set ALL nicknames</option></select></label>
+    <input id="gf1" type="text" autocomplete="off">
+    <div class="m" id="gfhint" style="margin-top:8px"></div>
+    <input id="gfind" type="search" placeholder="Hanapin ang GC…" oninput="gRender()">
+    <div id="gflist" class="gclist m">Pindutin ang Refresh list…</div>
+    <button class="ghost" onclick="gLoad()">Refresh list</button>
+
+    <details class="more">
+      <summary>More tools (pindutin muna ang pangalan ng GC)</summary>
+      <div class="m" id="gmore" style="margin-top:8px">Wala pang napiling GC</div>
+      <div class="g"><button class="ghost" onclick="gAct('gcname-set',{name:gv('gf1')})">Set GC name once</button><button class="ghost" onclick="gAct('nick-clearall')">Clear ALL nicknames</button></div>
+      <div class="g"><button class="go" onclick="gAct('nick-lock')">Lock nicknames</button><button class="ghost" onclick="gAct('nick-unlock')">Unlock nicknames</button></div>
+    </details>
+  </div>
+</section>
+
+<!-- LOCKS (Title, Nickname, Image, Mass Setnn) -->
+<section id="tab-locks" role="tabpanel" hidden>
+  <div class="c">
+    <h2>🔒 Group Title Lock</h2>
+    <div class="m">I-lock ang pangalan ng GC. Kapag may nagpalit, ibabalik sa tamang title sa loob ng <b>~120s</b>. Chat command: <b>!titlelock on &lt;title&gt;</b> / <b>!titlelock off</b> / <b>!titlelock status</b>.</div>
+    <label>Thread ID ng GC<input id="tl-thread" type="text" placeholder="hal. 1234567890"></label>
+    <label>Eksaktong title na i-lock<input id="tl-title" type="text" placeholder="hal. Phobia Official GC"></label>
+    <div class="g">
+      <button class="acc" onclick="tlSave()">Save lock</button>
+      <button class="ghost" onclick="tlLoad()">Refresh list</button>
+    </div>
+    <div id="tl-list" class="m" style="margin-top:12px">Loading…</div>
+  </div>
+
+  <div class="c">
+    <h2>🖼️ Group Image Lock</h2>
+    <div class="m">I-lock ang larawan ng GC. Kapag may nagpalit, ibabalik sa tamang image URL sa loob ng <b>~120s</b>. Chat command: <b>!imagelock on &lt;url&gt;</b> / <b>!imagelock off</b>.</div>
+    <label>Thread ID ng GC<input id="il-thread" type="text" placeholder="hal. 1234567890"></label>
+    <label>Image URL<input id="il-url" type="text" placeholder="https://..."></label>
+    <div class="g">
+      <button class="acc" onclick="ilSave()">Save lock</button>
+      <button class="ghost" onclick="ilLoad()">Refresh list</button>
+    </div>
+    <div id="il-list" class="m" style="margin-top:12px">Loading…</div>
+  </div>
+
+  <div class="c">
+    <h2>🔒 Nickname Lock</h2>
+    <div class="m">I-lock ang nickname ng specific user. Kapag may nagpalit, ibabalik sa tamang nickname. Chat command: <b>!nicklock on @user &lt;nick&gt;</b> / <b>!nicklock off @user</b> / <b>!nicklock list</b>.</div>
+    <label>Thread ID ng GC<input id="nl-thread" type="text" placeholder="hal. 1234567890"></label>
+    <div class="g">
+      <label>User ID<input id="nl-user" type="text" placeholder="hal. 100012345678"></label>
+      <label>Nickname<input id="nl-nick" type="text" maxlength="64" placeholder="hal. Boss"></label>
+    </div>
+    <div class="g">
+      <button class="acc" onclick="nlSave()">Save lock</button>
+      <button class="ghost" onclick="nlLoad()">Refresh list</button>
+    </div>
+    <div id="nl-list" class="m" style="margin-top:12px">Loading…</div>
+  </div>
+
+  <div class="c">
+    <h2>👥 Mass Set Nickname</h2>
+    <div class="m">Palitan ang nickname ng maraming member sa isang GC (max 50, may 1.5s pagitan kada user). Chat command: <b>!massnn &lt;nick&gt; @user1 @user2</b>.</div>
+    <label>Thread ID ng GC<input id="mn-thread" type="text" placeholder="hal. 1234567890"></label>
+    <label>Nickname<input id="mn-nick" type="text" maxlength="64" placeholder="hal. Phobia Member"></label>
+    <label>User IDs (comma o newline, max 50)<textarea id="mn-users" rows="4" placeholder="100012345678&#10;100098765432"></textarea></label>
+    <button class="acc" onclick="mnRun()">Apply to members</button>
+    <pre class="out" id="mn-result" hidden></pre>
+  </div>
+</section>
+
+<!-- SPAM -->
+<section id="tab-spam" role="tabpanel" hidden>
+  <div class="c">
+    <h2>📣 Spam Mode</h2>
+    <div class="m">Mag-spam ng message sa isang GC. Chat command: <b>!spam start &lt;sec&gt; &lt;loops&gt;</b> (i-reply sa message) / <b>!spam stop</b> / <b>!spam stopall</b> / <b>!spam status</b>.</div>
+    <label>Thread ID ng GC<input id="sp-thread" type="text" placeholder="hal. 1234567890"></label>
+    <div class="g">
+      <label>Interval (segundo, min 2, max 3600)<input id="sp-interval" type="number" min="2" max="3600" value="5"></label>
+      <label>Loops (1-100, para sa numbered list)<input id="sp-loops" type="number" min="1" max="100" value="1"></label>
+    </div>
+    <label>Message o numbered list<textarea id="sp-message" rows="5" placeholder="Pwedeng single message:&#10;hello world&#10;&#10;O numbered list:&#10;1. hi&#10;2. hello&#10;3. yo"></textarea></label>
+    <div class="g">
+      <button class="go" onclick="spStart()">▶ Start</button>
+      <button class="stop" onclick="spStop()">■ Stop this GC</button>
+    </div>
+    <button class="stop" onclick="spStopAll()">■ Stop ALL runs</button>
+    <pre class="out" id="sp-status" style="margin-top:12px">Walang tumatakbo.</pre>
+  </div>
+</section>
+
+<!-- COUNT -->
+<section id="tab-count" role="tabpanel" hidden>
+  <div class="c">
+    <h2>🔢 Auto Count <span id="cnbadge"></span></h2>
+    <div class="m">Awtomatikong magse-send ng <b>1, 2, 3, 4…</b> sa GC — pang-resibo. May custom suffix (hal. <b>🎄</b> → "1 🎄"). Chat command: <b>!count start &lt;sec&gt; [total] [suffix]</b> / <b>!count stop</b> / <b>!count status</b>.</div>
+    <label>Thread ID ng GC<input id="cn-thread" type="text" placeholder="hal. 1234567890"></label>
+    <div class="g">
+      <label>Interval (segundo, 2-3600)<input id="cn-interval" type="number" min="2" max="3600" value="5"></label>
+      <label>Hanggang (1-1000)<input id="cn-total" type="number" min="1" max="1000" value="100"></label>
+    </div>
+    <div class="g">
+      <label>Simula sa numero<input id="cn-from" type="number" min="0" value="1"></label>
+      <label>Custom suffix (optional)<input id="cn-suffix" type="text" maxlength="100" placeholder="hal. 🎄 o HO HO HO"></label>
+    </div>
+    <div class="g">
+      <button class="go" onclick="cnStart()">▶ Start count</button>
+      <button class="stop" onclick="cnStop()">■ Stop this GC</button>
+    </div>
+    <button class="stop" onclick="cnStopAll()">■ Stop ALL counts</button>
+    <div class="m" style="margin-top:14px">Huling resibo</div>
+    <div class="count-big" id="cn-last">–</div>
+    <pre class="out" id="cn-status" style="margin-top:10px">Walang tumatakbo.</pre>
+  </div>
+
+  <div class="c">
+    <h2>🎯 Self react sa target <span id="tgbadge"></span></h2>
+    <div class="m">Kapag nag-message ang target sa GC, ang bot account mismo ang magre-react sa message niya. Chat command: i-reply sa message ng target, tapos <b>!target on &lt;emoji&gt;</b> / <b>!target off</b> / <b>!target list</b>.</div>
+    <label>Thread ID ng GC<input id="tg-thread" type="text" placeholder="hal. 1234567890"></label>
+    <label>Facebook ID ng target<input id="tg-user" type="text" inputmode="numeric" placeholder="hal. 100012345678901"></label>
+    <label>Emoji<input id="tg-emoji" type="text" maxlength="8" value="❤️"></label>
+    <div class="g">
+      <button class="acc" onclick="tgSet()">＋ Set target</button>
+      <button class="ghost" onclick="tgRemove()">✕ Tanggalin</button>
+    </div>
+    <pre class="out" id="tg-list" style="margin-top:12px">Walang target.</pre>
+  </div>
+</section>
+
+<!-- REACT -->
+<section id="tab-react" role="tabpanel" hidden>
+  <div class="c">
+    <h2>❤️ React sa message</h2>
+    <div class="m">Mag-react sa isang message gamit ang message ID. Makukuha mo ito mula sa event ng bot, o sa chat gamit ang <b>!react &lt;emoji&gt;</b> (i-reply sa message).</div>
+    <label>Message ID<input id="rx-mid" type="text" placeholder="hal. mid.$abc123..."></label>
+    <label>Thread ID ng GC<input id="rx-thread" type="text" placeholder="hal. 1234567890"></label>
+    <label>Emoji<input id="rx-emoji" type="text" maxlength="8" value="❤️"></label>
+    <button class="acc" onclick="rxSend()">React</button>
+    <pre class="out" id="rx-result" hidden></pre>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section id="tab-settings" role="tabpanel" hidden>
+  <div class="c">
+    <h2>Branding ng owner</h2>
+    <div class="m">Lalabas sa itaas ng dashboard at sa pamagat ng tab. Naka-save lang sa device na ito.</div>
+    <label>Pangalan ng owner<input id="own_name" type="text" maxlength="30" placeholder="hal. Juan"></label>
+    <button class="acc" onclick="saveOwner()">Save pangalan</button>
+  </div>
+
+  <div class="c">
+    <h2>Reply settings</h2>
+    <label>Bilis ng reply<select id="s_speed"><option value="fast">Fast (~1-3s)</option><option value="normal">Normal (~3-6s)</option><option value="slow">Slow (~5-9s)</option></select></label>
+    <div class="g"><label>Self react<select id="s_self"><option value="1">ON</option><option value="0">OFF</option></select></label>
+    <label>Self react chance (0-1)<input id="s_selfrate" type="number" step="0.05" min="0" max="1"></label></div>
+    <label>Max skip na sunod-sunod (0-4). 0 = sasagot sa lahat<input id="s_skip" type="number" step="1" min="0" max="4"></label>
+    <div class="g"><label>Max replies / oras (0 = walang limit)<input id="s_hour" type="number" min="0" max="1000000"></label><label>Max replies / araw (0 = walang limit)<input id="s_day" type="number" min="0" max="10000000"></label></div>
+    <div class="g">
+      <label>Troll replies (random asar)<select id="s_troll"><option value="1">ON</option><option value="0">OFF</option></select></label>
+      <label>PM Banat (sagutin ang PM)<select id="s_pm"><option value="1">ON</option><option value="0">OFF</option></select></label>
+    </div>
+    <div class="g">
+      <label>Mark as seen<select id="s_read"><option value="1">ON</option><option value="0">OFF</option></select></label>
+      <label>Quiet hours (walang reply)<select id="s_q"><option value="0">OFF</option><option value="1">ON</option></select></label>
+    </div>
+    <div class="g"><label>Start<input id="s_qs" type="time"></label><label>End<input id="s_qe" type="time"></label></div>
+    <div class="m" id="tz" style="margin-top:10px"></div>
+    <button class="acc" onclick="saveSettings()">Save settings</button>
+  </div>
+
+  <div class="c">
+    <h2>Mga admin</h2>
+    <div class="m">Mga Facebook ID na puwedeng gumamit ng admin commands (<b>!gcname</b>, <b>!troll</b>, <b>!eco</b>, <b>!titlelock</b>, <b>!nicklock</b>, <b>!massnn</b>, <b>!spam</b>, <b>!imagelock</b>) sa chat. Laging admin ang mismong bot account. Isang ID kada linya, o paghiwalayin ng comma.</div>
+    <div class="m" style="margin-top:6px">Para sa owner commands (<b>!setbal</b>, <b>!additem</b>), mag-set ng <b>OWNER_IDS</b> sa Railway Variables.</div>
+    <textarea id="admins" rows="3" placeholder="61596019734288"></textarea>
+    <div class="m" id="adminst" style="margin-top:8px"></div>
+    <button class="acc" onclick="post('admins',{ids:$('admins').value}).then(()=>{adminsFilled=false})">Save admins</button>
+  </div>
+</section>
+
+<!-- SESSION -->
+<section id="tab-session" role="tabpanel" hidden>
+  <div class="c">
+    <h2>Facebook session</h2>
+    <div class="m" id="ss"></div>
+    <textarea id="ck" rows="5" placeholder="Paste cookie / appstate (JSON array o c_user=...; xs=...)"></textarea>
+    <button class="acc" onclick="post('session',{cookie:$('ck').value}).then(()=>$('ck').value='')">Save &amp; connect</button>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="tab-activity" role="tabpanel" hidden>
+  <div class="c">
+    <h2>Activity</h2>
+    <div class="errbox" id="err"></div>
+    <div id="log"></div>
+  </div>
+</section>
+
+<!-- COMMANDS -->
+<section id="tab-cmds" role="tabpanel" hidden>
+  <div class="c"><h2>Chat commands</h2><div class="m">Prefix: <b id="pfx">!</b>. Ang mga may 🔒 ay para sa admin o owner lang.</div></div>
+  <div class="c cmds" id="cmdlist"></div>
+</section>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+let S={},K=localStorage.k||"",filled=false;
+const $=i=>document.getElementById(i);
+function applyOwner(){const n=(localStorage.owner||'').trim();
+ $('ownt').textContent=n?'Personal bot ni '+n:'Personal bot ng owner';
+ document.title=n?n+' · 🎄 Phobia':'🎄 Phobia Bot · Christmas'}
+function saveOwner(){try{localStorage.owner=$('own_name').value.trim()}catch{}applyOwner();toast('Na-save ang pangalan ✓')}
+$('own_name').value=localStorage.owner||'';applyOwner();
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+(async()=>{let n;
+ try{n=await (await fetch('/api/needsetup')).json();localStorage.open=n.open?'1':'0'}catch{n={open:localStorage.open==='1'}}
+ if(!n.open&&!K&&navigator.onLine)K=localStorage.k=prompt("Dashboard password")||"";
+ load();setTimeout(threads,1200);setTimeout(gfUI,1400);setTimeout(gLoad,1600);setTimeout(tlLoad,1800);setTimeout(nlLoad,2000);setTimeout(ilLoad,2200);spPoll()})();
+
+/* ---------- tabs ---------- */
+const tabs=[...document.querySelectorAll('nav button')];
+function openTab(name){
+  if(!$('tab-'+name))name='home';
+  tabs.forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===name)));
+  document.querySelectorAll('[role=tabpanel]').forEach(p=>p.hidden=p.id!=='tab-'+name);
+  history.replaceState(null,'','#'+name);window.scrollTo(0,0);
+}
+tabs.forEach(b=>b.addEventListener('click',()=>openTab(b.dataset.tab)));
+openTab(location.hash.slice(1)||'home');
+
+/* ---------- helpers ---------- */
+let toastT;
+function toast(msg,err){const t=$('toast');t.textContent=msg;t.className='show'+(err?' err':'');clearTimeout(toastT);toastT=setTimeout(()=>t.className='',2600)}
+const dur=s=>`${s/3600|0}h ${s%3600/60|0}m ${s%60|0}s`;
+const ago=t=>{if(!t)return'wala pa';const s=(Date.now()-t)/1000|0;return s<90?s+'s ago':s<5400?(s/60|0)+'m ago':s<172800?(s/3600|0)+'h ago':(s/86400|0)+'d ago'};
+let netDown=false;
+function setNet(down,since){netDown=down;$('off').style.display=down?'block':'none';$('offt').textContent=down&&since?`Huling status: ${ago(since)}.`:''}
+async function api(p,b){let r;
+ try{r=await fetch('/api/'+p,{method:b?'POST':'GET',headers:{'content-type':'application/json','x-admin':K},body:b?JSON.stringify(b):undefined})}
+ catch{netDown=true;return null}
+ if(r.status==401||r.status==429){const j=await r.json().catch(()=>({}));if(r.status==429){toast(j.error||'Masyadong maraming try',true);return}localStorage.k=K=prompt("Wrong password, try again")||"";return}
+ netDown=false;return r.json()}
+async function post(p,b){const r=await api(p,b||{});if(r&&r.error)toast(r.error,true);else if(r)toast('Tapos na ✓');else if(netDown)toast('Offline ka. Hindi naipadala ang utos.',true);load()}
+const readCache=()=>{try{return JSON.parse(localStorage.lastStatus)}catch{return null}};
+
+/* ---------- settings ---------- */
+function fill(s){const t=s.settings;$('s_speed').value=t.speed;$('s_self').value=t.selfReact?'1':'0';$('s_selfrate').value=t.selfReactRate;
+ $('s_skip').value=t.skipMax;$('s_hour').value=t.hourlyMax;$('s_day').value=t.dailyMax;$('s_read').value=t.markRead?'1':'0';$('s_troll').value=t.troll?'1':'0';
+ $('s_pm').value=t.pmTroll?'1':'0';
+ $('s_q').value=t.quiet.on?'1':'0';$('s_qs').value=t.quiet.start.padStart(5,'0');$('s_qe').value=t.quiet.end.padStart(5,'0');$('tz').textContent='Timezone: '+t.tz;filled=true}
+function saveSettings(){post('settings',{speed:$('s_speed').value,selfReact:$('s_self').value=='1',selfReactRate:+$('s_selfrate').value,
+ skipMax:+$('s_skip').value,hourlyMax:+$('s_hour').value,dailyMax:+$('s_day').value,markRead:$('s_read').value=='1',troll:$('s_troll').value=='1',
+ pmTroll:$('s_pm').value=='1',
+ quiet:{on:$('s_q').value=='1',start:$('s_qs').value,end:$('s_qe').value}})}
+let gcFilled=false,adminsFilled=false;
+const gcNames=()=>$('gc_names').value.split('\n').map(x=>x.trim()).filter(Boolean);
+function gcStart(){post('gcstart',{names:gcNames(),intervalS:+$('gc_int').value||45})}
+function gcSave(){post('gcsave',{names:gcNames(),intervalS:+$('gc_int').value||45})}
+
+/* ---------- commands cheat sheet ---------- */
+let cmdPrefix=null;
+function renderCmds(p){
+  if(cmdPrefix===p)return;cmdPrefix=p;$('pfx').textContent=p;
+  const G=[
+   ['Music',[[`m Blinding Lights by The Weeknd`,'buong kanta']]],
+   ['Economy',[['balance · daily · work','kita'],['bet <amt> · slot <amt> · cf heads|tails <amt>','laro'],['rob @tao','nakawan (30 min cooldown)'],['deposit / withdraw <amt|all>','bank'],['give @tao <amt> · top','padala at ranking']]],
+   ['Shop',[['shop · item <#>','tingnan'],['buy <#> [dami] · sell <item> · inv','bili, benta, bag']]],
+   ['Moderation (admin ng GC)',[['kick @tao','tanggalin'],['ban @tao [dahilan] · unban <#|@tao> · banlist','ban'],['warn @tao · warns · unwarn @tao [all]','3 warns = kick'],['unsend (i-reply) · mods','burahin ang mensahe ng bot']]],
+   ['Utility',[['ask <tanong> · weather <lugar> · define <word>',''],['calc <math> · time · timecheck',''],['convert 100 usd php · rate 1000 eur to jpy',''],['remind 10m <text> · roll · flip · 8ball · pick a | b','']]],
+   ['🔒 Admin',[['on · off','buksan/patayin ang bot sa GC'],['gcname start|stop|add|set|interval','GC name cycle'],['troll on|off · pm on|off · eco add|remove|reset @tao','']]],
+   ['🔒 Locks',[['titlelock on <title> · titlelock off · titlelock status','title lock'],['imagelock on <url> · imagelock off · imagelock status','image lock'],['nicklock on @user <nick> · nicklock off @user · nicklock list','nickname lock'],['massnn <nick> @user1 @user2 ...','mass set nickname (max 50)']]],
+   ['📣 Spam',[['spam start <sec> <loops>','i-reply sa message na gusto mong i-spam'],['spam stop · spam stopall · spam status','']]],
+   ['🔢 Count',[['count start <sec> [total] [suffix]','hal. count start 5 50 🎄'],['count stop · count status','']]],
+   ['🎯 Target react',[['target on <emoji>','i-reply sa message ng target'],['target off · target list','']]],
+   ['❤️ React',[['react <emoji>','i-reply sa message']]],
+   ['🔒 Owner',[['setbal @tao <amt> [wallet|bank]','i-set ang balance'],['additem Pangalan | presyo | emoji | desc | max','dagdag item'],['edititem <#> price|name|emoji|desc|max <value>',''],['delitem <#>','tanggal item (50% refund)']]],
+  ];
+  $('cmdlist').innerHTML=G.map(([t,rows])=>`<div><h3>${esc(t)}</h3>${rows.map(([c,d])=>`<code>${esc(p)}${esc(c)}${d?` <span>— ${esc(d)}</span>`:''}</code>`).join('')}</div>`).join('');
+}
+
+/* ---------- status ---------- */
+function setMoon(s){
+  let cls='off',h='Hindi nakakonekta',sub='Offline ang Messenger. Kusang susubukan ulit ng bot.';
+  if(s.authDead){cls='off';h='Patay ang session';sub='Mag-paste ng bagong cookie sa Session tab.'}
+  else if(s.online&&s.running&&!s.quietNow){cls='full';h='Gising at sumasagot';sub=`${s.repliesHour} reply ngayong oras · ${s.repliesDay} ngayong araw`}
+  else if(s.online&&s.running&&s.quietNow){cls='crescent';h='Quiet hours, tahimik muna';sub='Sasagot ulit paglampas ng quiet hours.'}
+  else if(s.online){cls='new';h='Naka-pause ang bot';sub='Online sa Messenger pero hindi sumasagot. Pindutin ang Start.'}
+  $('moon').className='moon '+cls;$('state').textContent=h;$('statesub').textContent=sub;
+}
+
+function renderSpamHome(spam){
+  const n=(spam||[]).length;
+  $('spbadge').textContent=n?`(${n})`:'';
+  $('spbadge').className=n?'ok':'';
+  $('spsummary').textContent=n
+    ?spam.map(r=>`• ${r.threadID.slice(-6)}: ${r.sent}/${r.totalMessages} every ${r.intervalSeconds}s (${r.mode})`).join('\n')
+    :'Walang tumatakbo.';
+}
+
+async function load(){let s=await api('status'),stale=0;
+ if(!s||s.error){if(!netDown)return;const c=readCache();setNet(true,c&&c.t);if(!c)return;s=c.s;stale=c.t}
+ else{setNet(false);try{localStorage.lastStatus=JSON.stringify({t:Date.now(),s})}catch{}}
+ S=s;if(!filled)fill(s);
+ if(!adminsFilled&&document.activeElement!==$('admins')){$('admins').value=(s.admins||[]).join('\n');adminsFilled=true}
+ $('adminst').textContent=`Naka-save: ${(s.admins||[]).length} admin${s.uid?' · bot account: '+s.uid:''}`;
+ if(s.gc&&!gcFilled){$('gc_names').value=s.gc.names.join('\n');$('gc_int').value=s.gc.intervalS;gcFilled=true}
+ if(s.gc){$('gcon').textContent=s.gc.on?'ON':'OFF';$('gcon').className=s.gc.on?'ok':'bad';
+  $('gcst').textContent=`Changes: ${s.gc.changes||0} · Now: ${s.gc.lastTitle||'—'} · Last: ${ago(s.gc.lastChangeAt)}${s.gc.fails?' · fails: '+s.gc.fails:''}`}
+ $('lib').textContent=(s.fca||'fca not loaded yet')+' · prefix '+s.prefix;renderCmds(s.prefix||'!');
+ $('dead').style.display=s.authDead?'block':'none';
+ $('conn').className='pill'+(s.online?' on':'');$('connt').textContent=s.online?'Online':'Offline';
+ $('on').textContent=s.online?'ONLINE':'OFFLINE';$('on').className='v '+(s.online?'ok':'bad');
+ $('run').textContent=s.running?(s.quietNow?'QUIET':'RUNNING'):'PAUSED';$('run').className='v '+(s.running?(s.quietNow?'warn':'ok'):'bad');
+ $('su').textContent=dur(s.serverUptime);$('bu').textContent=dur(s.botUptime);
+ $('autosw').setAttribute('aria-checked',String(!!s.autoReply));
+ $('st').textContent=`${s.autoReply?'Naka-ON':'Naka-OFF'} · ${s.repliesHour}/oras · ${s.repliesDay}/araw · na-block ng anti-spam: ${s.suppressed}`;
+ $('health').innerHTML=`Cookie na-refresh: <b>${ago(s.stateRefreshedAt)}</b><br>Last health check: <b>${ago(s.lastPing)}</b><br>Last event: <b>${ago(s.lastEventAt)}</b><br>Connected: <b>${ago(s.lastConnected)}</b>`;
+ $('ss').textContent=s.cookieSaved?`Cookie saved (${ago(s.savedAt)}) · ${s.uid||'not connected'}`:'Walang cookie. Mag-paste sa ibaba para makakonekta.';
+ $('err').textContent=s.lastError||'';
+ setMoon(s);
+ renderSpamHome(s.spam);
+ if(stale){$('moon').className='moon off';$('state').textContent='Walang koneksyon sa server';$('statesub').textContent='Huling nakita: '+ago(stale)+'. Ito ang huling status na na-save sa device mo.';$('conn').className='pill';$('connt').textContent='Offline';$('on').textContent='OFFLINE';$('on').className='v bad';$('run').textContent='DI ALAM';$('run').className='v warn'}
+ $('log').innerHTML=s.log.length?s.log.map(l=>`<div class="ev ${esc(l.who)}"><time>${new Date(l.t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})}</time><div><b>${esc(l.who)}</b> ${esc(l.msg)}</div></div>`).join(''):'<div class="m">Wala pang activity.</div>'}
+
+/* ---------- group chats ---------- */
+async function threads(){const t=await api('threads')||[];const on=new Set((S.threads||[]).map(String));const known=new Set(t.map(x=>String(x.id)));
+ const rows=t.map(x=>[String(x.id),x.name]).concat([...on].filter(i=>!known.has(i)).map(i=>[i,'(GC '+i+')']));
+ $('gclist').innerHTML=rows.length?rows.map(([id,n])=>`<label class="gcrow"><input type="checkbox" data-id="${esc(id)}" ${on.has(id)?'checked':''}><span>${esc(n)}</span></label>`).join(''):'Walang GC na nakita. Connect muna, tapos Refresh list.'}
+$('gclist').addEventListener('change',e=>{const i=e.target;if(i&&i.dataset&&i.dataset.id)post('threadset',{threadId:i.dataset.id,on:i.checked})});
+setInterval(load,3000);
+
+/* ---------- group features: Lock GC name + Set ALL nicknames ---------- */
+let GL=[],GACT={},GSEL='';
+const gv=i=>$(i).value.trim();
+function gName(id){const g=GL.find(x=>x.threadID===id);return g?g.name:id}
+function gfUI(){
+  const lock=gv('gft')==='lock';
+  $('gf1').placeholder=lock?'Pangalan ng GC na ila-lock (walang laman = current name)':'Nickname para sa lahat ({i} = bilang: 1, 2, 3…)';
+  $('gfhint').textContent=lock?'Start = i-lock ang pangalan. Babalik ito kapag may nagpalit. Stop = i-unlock.':'Start = lahat ng member ay mapapalitan ng nickname (dahan-dahan, may pagitan). Stop = ihinto ang takbo.';
+  gActive();
+}
+async function gLoad(){
+  const r=await api('groups');
+  if(!r||r.error){$('gflist').textContent=(r&&r.error)?r.error:'Hindi ma-load ang mga GC. Siguraduhing online ang bot.';return}
+  GL=r.groups||[];gRender();gActive();
+}
+function gRender(){
+  const q=gv('gfind').toLowerCase();
+  const rows=GL.filter(g=>!q||(g.name+' '+g.threadID).toLowerCase().includes(q));
+  $('gflist').innerHTML=rows.length?rows.map(g=>{const on=!!GACT[g.threadID];
+   return `<div class="gfrow${GSEL===g.threadID?' picked':''}"><div class="nm" data-pick="${esc(g.threadID)}"><b>${esc(g.name)}</b><span class="m">${g.members?esc(g.members)+' members':esc(g.threadID)}</span></div>`+
+   `<button class="${on?'stop':'go'}" data-go="${esc(g.threadID)}" data-on="${on?1:0}">${on?'Stop':'Start'}</button></div>`}).join(''):'Walang GC na nakita.';
+}
+async function gActive(){
+  const r=await api('group-active?feature='+encodeURIComponent(gv('gft')));
+  if(!r||r.error)return;
+  GACT={};(r.threads||[]).forEach(t=>GACT[t]=1);gRender();
+}
+async function gGo(id,on){
+  const f=gv('gft');
+  if(!on&&f==='nick'){
+    if(!gv('gf1'))return toast('I-type muna ang nickname',true);
+    if(!confirm('Palitan ang nickname ng LAHAT sa "'+gName(id)+'"?'))return;
+  }
+  const r=await api(on?'group/feature-stop':'group/feature-start',{threadID:id,feature:f,text:gv('gf1')});
+  if(r&&r.error)toast(r.error,true);else if(r)toast(on?'Na-stop ✓':'Nagsimula ✓');
+  gActive();
+}
+async function gAct(action,extra){
+  if(!GSEL)return toast('Pindutin muna ang pangalan ng GC',true);
+  const r=await api('group/'+action,Object.assign({threadID:GSEL},extra||{}));
+  if(r&&r.error)toast(r.error,true);
+  else if(r)toast(r.queued!==undefined?('Naka-queue: '+r.queued+' change, tumatakbo sa background'):'Tapos na ✓');
+  gActive();
+}
+$('gflist').addEventListener('click',e=>{
+  const b=e.target.closest('[data-go]');
+  if(b)return gGo(b.dataset.go,b.dataset.on==='1');
+  const p=e.target.closest('[data-pick]');
+  if(p){GSEL=p.dataset.pick;$('gmore').textContent='Napili: '+gName(GSEL);gRender()}
+});
+setInterval(()=>{if(S.online)gActive()},5000);
+
+/* ============================================================
+   LOCKS: title lock + image lock + nickname lock + mass setnn
+   ============================================================ */
+async function tlLoad(){
+  const r=await api('titlelock');
+  const box=$('tl-list');
+  if(!r||r.error){box.textContent='Error: '+((r&&r.error)||'hindi ma-load');return}
+  const gs=r.groups||[];
+  box.innerHTML=gs.length
+    ?gs.map(g=>`<div style="padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <div><b>${esc(g.threadID)}</b><br><span class="m">Title: ${esc(g.expectedTitle)}</span></div>
+        <button class="stop" data-tl="${esc(g.threadID)}" style="width:auto;margin:0;padding:8px 12px">Remove</button>
+      </div>`).join('')
+    :'Wala pang naka-lock na title.';
+  box.querySelectorAll('[data-tl]').forEach(b=>b.addEventListener('click',async()=>{
+    try{await fetch('/api/titlelock/'+encodeURIComponent(b.dataset.tl),{method:'DELETE',headers:{'x-admin':K}})}catch{}
+    toast('Removed ✓');tlLoad();
+  }));
+}
+async function tlSave(){
+  const threadID=gv('tl-thread'), title=gv('tl-title');
+  if(!threadID||!title)return toast('Kailangan ng thread ID at title',true);
+  const r=await api('titlelock',{threadID,title,enabled:true});
+  if(r&&r.error)toast(r.error,true);else{toast('Saved ✓');$('tl-title').value='';tlLoad()}
+}
+
+async function ilLoad(){
+  const r=await api('imagelock');
+  const box=$('il-list');
+  if(!r||r.error){box.textContent='Error: '+((r&&r.error)||'hindi ma-load');return}
+  const gs=r.groups||[];
+  box.innerHTML=gs.length
+    ?gs.map(g=>`<div style="padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <div><b>${esc(g.threadID)}</b><br><span class="m">URL: ${esc(g.imageUrl)}</span></div>
+        <button class="stop" data-il="${esc(g.threadID)}" style="width:auto;margin:0;padding:8px 12px">Remove</button>
+      </div>`).join('')
+    :'Wala pang naka-lock na image.';
+  box.querySelectorAll('[data-il]').forEach(b=>b.addEventListener('click',async()=>{
+    try{await fetch('/api/imagelock/'+encodeURIComponent(b.dataset.il),{method:'DELETE',headers:{'x-admin':K}})}catch{}
+    toast('Removed ✓');ilLoad();
+  }));
+}
+async function ilSave(){
+  const threadID=gv('il-thread'), imageUrl=gv('il-url');
+  if(!threadID||!imageUrl)return toast('Kailangan ng thread ID at URL',true);
+  const r=await api('imagelock',{threadID,imageUrl,enabled:true});
+  if(r&&r.error)toast(r.error,true);else{toast('Saved ✓');$('il-url').value='';ilLoad()}
+}
+
+async function nlLoad(){
+  const r=await api('nicklocks');
+  const box=$('nl-list');
+  if(!r||r.error){box.textContent='Error: '+((r&&r.error)||'hindi ma-load');return}
+  const ls=r.locks||[];
+  box.innerHTML=ls.length
+    ?ls.map(l=>`<div style="padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <div><b>${esc(l.userID)}</b><br><span class="m">Nick: ${esc(l.expectedNickname)}<br>GC: ${esc(l.threadID)}</span></div>
+        <button class="stop" data-nl-th="${esc(l.threadID)}" data-nl-user="${esc(l.userID)}" style="width:auto;margin:0;padding:8px 12px">Remove</button>
+      </div>`).join('')
+    :'Walang naka-lock na nickname.';
+  box.querySelectorAll('[data-nl-user]').forEach(b=>b.addEventListener('click',async()=>{
+    try{await fetch('/api/nicklocks/'+encodeURIComponent(b.dataset.nlTh)+'/'+encodeURIComponent(b.dataset.nlUser),{method:'DELETE',headers:{'x-admin':K}})}catch{}
+    toast('Removed ✓');nlLoad();
+  }));
+}
+async function nlSave(){
+  const threadID=gv('nl-thread'), userID=gv('nl-user'), nickname=gv('nl-nick');
+  if(!threadID||!userID||!nickname)return toast('Fill all three fields',true);
+  const r=await api('nicklocks',{threadID,userID,nickname});
+  if(r&&r.error)toast(r.error,true);else{toast('Saved ✓');$('nl-nick').value='';nlLoad()}
+}
+
+async function mnRun(){
+  const threadID=gv('mn-thread'), nickname=gv('mn-nick');
+  const userIDs=$('mn-users').value.split(/[\s,]+/).map(s=>s.trim()).filter(Boolean);
+  const out=$('mn-result');
+  if(!threadID||!nickname||!userIDs.length)return toast('Fill thread, nickname, and at least 1 user ID',true);
+  if(userIDs.length>50)return toast('Max 50 users per run',true);
+  out.hidden=false;out.textContent='Running…';
+  const r=await api('mass-setnn',{threadID,nickname,userIDs});
+  if(!r){out.textContent='Offline — hindi naipadala.';return}
+  if(r.error){out.textContent='Error: '+r.error;toast(r.error,true);return}
+  out.textContent=`✅ Total: ${r.total} · OK: ${r.succeeded} · Fail: ${r.failed} · Lock saved: ${r.lockSaved} · Lock failed: ${r.lockSaveFailed}\n\n`+
+    (r.results||[]).map(x=>`${x.ok?'✓':'✗'} ${x.userID}${x.ok?'':': '+x.error}`).join('\n');
+  toast('Tapos ✓');
+}
+
+/* ============================================================
+   SPAM
+   ============================================================ */
+async function spStart(){
+  const threadID=gv('sp-thread');
+  const message=$('sp-message').value;
+  const intervalSeconds=+$('sp-interval').value;
+  const loops=+$('sp-loops').value||1;
+  const out=$('sp-status');
+  if(!threadID||!message.trim())return toast('Fill thread ID and message',true);
+  const r=await api('spam/start',{threadID,message,intervalSeconds,loops});
+  if(!r){out.textContent='Offline — hindi naipadala.';return}
+  if(r.error){out.textContent='Error: '+r.error;toast(r.error,true);return}
+  out.textContent=JSON.stringify(r,null,2);
+  toast('Spam started ✓');
+  spPoll();
+}
+async function spStop(){
+  const threadID=gv('sp-thread');
+  const r=await api('spam/stop',{threadID});
+  if(r&&r.error){toast(r.error,true);return}
+  toast('Stopped ✓');spPoll();
+}
+async function spStopAll(){
+  const r=await api('spam/stop',{all:true});
+  if(r&&r.error){toast(r.error,true);return}
+  toast('All stopped ✓');spPoll();
+}
+async function spPoll(){
+  const r=await api('spam/status');
+  const out=$('sp-status');
+  if(!r){out.textContent='Offline.';return}
+  if(r.error){out.textContent='Error: '+r.error;return}
+  out.textContent=Array.isArray(r)&&r.length?JSON.stringify(r,null,2):'Walang tumatakbo.';
+  renderSpamHome(r);
+}
+setInterval(spPoll,5000);
+
+/* ============================================================
+   REACT
+   ============================================================ */
+async function rxSend(){
+  const messageID=gv('rx-mid'), threadID=gv('rx-thread'), emoji=gv('rx-emoji')||'❤️';
+  const out=$('rx-result');
+  if(!messageID||!threadID)return toast('Kailangan ng message ID at thread ID',true);
+  out.hidden=false;out.textContent='Sending…';
+  const r=await api('react',{messageID,threadID,emoji});
+  if(!r){out.textContent='Offline — hindi naipadala.';return}
+  if(r.error){out.textContent='Error: '+r.error;toast(r.error,true);return}
+  out.textContent='✓ '+JSON.stringify(r,null,2);
+  toast('Reacted ✓');
+}
+
+/* ============================================================
+   AUTO COUNT + TARGET REACT
+   ============================================================ */
+function renderCount(list){
+  const n=(list||[]).length;
+  $('cnbadge').textContent=n?`(${n})`:'';$('cnbadge').className=n?'ok':'';
+  const last=(list||[]).map(r=>r.lastNumber).filter(x=>x!==null&&x!==undefined);
+  $('cn-last').textContent=last.length?String(Math.max(...last)):'–';
+  $('cn-status').textContent=n?list.map(r=>`• ${r.threadID.slice(-6)}: last ${r.lastNumber??'-'} · ${r.sent}/${r.total} · every ${r.intervalSeconds}s${r.suffix?' · '+r.suffix:''}${r.lastSentAt?'\n   huling send: '+new Date(r.lastSentAt).toLocaleTimeString():''}`).join('\n'):'Walang tumatakbo.';
+}
+async function cnStart(){
+  const threadID=gv('cn-thread');
+  if(!threadID)return toast('Ilagay ang Thread ID',true);
+  const r=await api('count/start',{threadID,intervalSeconds:+$('cn-interval').value,total:+$('cn-total').value,startFrom:+$('cn-from').value,suffix:$('cn-suffix').value});
+  if(!r)return toast('Offline — hindi naipadala.',true);
+  if(r.error){$('cn-status').textContent='Error: '+r.error;return toast(r.error,true)}
+  toast('Count started ✓');cnPoll();
+}
+async function cnStop(){
+  const r=await api('count/stop',{threadID:gv('cn-thread')});
+  if(r&&r.error)return toast(r.error,true);
+  toast('Stopped ✓');cnPoll();
+}
+async function cnStopAll(){
+  const r=await api('count/stop',{all:true});
+  if(r&&r.error)return toast(r.error,true);
+  toast('All stopped ✓');cnPoll();
+}
+async function cnPoll(){
+  const r=await api('count/status');
+  if(!r||r.error||!Array.isArray(r))return;
+  renderCount(r);
+}
+function renderTargets(list){
+  const n=(list||[]).length;
+  $('tgbadge').textContent=n?`(${n})`:'';$('tgbadge').className=n?'ok':'';
+  $('tg-list').textContent=n?list.map(x=>`• GC ${String(x.threadID).slice(-6)} → ${x.userID} ${x.emoji} (${x.reacted||0} reacts)`).join('\n'):'Walang target.';
+}
+async function tgSet(){
+  const threadID=gv('tg-thread'),userID=gv('tg-user'),emoji=gv('tg-emoji')||'❤️';
+  if(!threadID||!userID)return toast('Kailangan ng Thread ID at Facebook ID',true);
+  const r=await api('target/set',{threadID,userID,emoji});
+  if(!r)return toast('Offline — hindi naipadala.',true);
+  if(r.error)return toast(r.error,true);
+  toast('Target set ✓');tgPoll();
+}
+async function tgRemove(){
+  const threadID=gv('tg-thread'),userID=gv('tg-user');
+  if(!threadID)return toast('Ilagay ang Thread ID',true);
+  const r=await api('target/remove',{threadID,userID:userID||undefined});
+  if(r&&r.error)return toast(r.error,true);
+  toast('Tinanggal ✓');tgPoll();
+}
+async function tgPoll(){
+  const r=await api('target/list');
+  if(!r||r.error||!Array.isArray(r))return;
+  renderTargets(r);
+}
+setInterval(()=>{cnPoll();tgPoll()},5000);
+setTimeout(()=>{cnPoll();tgPoll()},800);
+
+/* ============================================================
+   CHRISTMAS: lights + snow
+   ============================================================ */
+(function(){
+  const cols=['#ff4d5e','#5fe08a','#f5c451','#5bb6ff'];
+  const L=$('lights');
+  if(L){for(let i=0;i<26;i++){const b=document.createElement('b');b.style.setProperty('--c',cols[i%cols.length]);b.style.setProperty('--d',(-(i*0.37)%2.4).toFixed(2)+'s');L.appendChild(b)}}
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const n=innerWidth<600?26:44;
+  for(let i=0;i<n;i++){
+    const f=document.createElement('i');f.className='snow';
+    const z=2+Math.random()*4;
+    f.style.cssText=`left:${(Math.random()*100).toFixed(1)}%;width:${z.toFixed(1)}px;height:${z.toFixed(1)}px;opacity:${(.35+Math.random()*.5).toFixed(2)};animation-duration:${(9+Math.random()*13).toFixed(1)}s;animation-delay:${(-Math.random()*20).toFixed(1)}s;--sw:${(-30+Math.random()*60).toFixed(0)}px`;
+    document.body.appendChild(f);
+  }
+})();
+
+/* ---------- offline app (PWA) ---------- */
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+let deferredInstall=null;
+const isStandalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;$('installcard').hidden=false;$('installbtn').hidden=false});
+addEventListener('appinstalled',()=>{$('installcard').hidden=true;deferredInstall=null});
+function installApp(){if(!deferredInstall)return;deferredInstall.prompt();deferredInstall.userChoice.finally(()=>{deferredInstall=null;$('installcard').hidden=true})}
+if(!isStandalone&&/iphone|ipad|ipod/i.test(navigator.userAgent)){$('installcard').hidden=false;$('installtxt').textContent='Sa Safari: pindutin ang Share, tapos Add to Home Screen. Mabubuksan ito kahit offline at makikita ang huling status.'}
+addEventListener('online',load);addEventListener('offline',load);
+</script>
+</body>
+  </html>
